@@ -1,0 +1,16 @@
+networks:
+  nginx-net:
+    external: true
+
+services:
+  db-duplication:
+    build:
+      context: .
+      dockerfile: dockerfile-db-dubl
+    container_name: "db-duplication"
+    image: "db-duplication:stable"
+    env_file:
+      - ./src/app/.env
+    networks:
+      - nginx-net
+    restart: unless-stopped

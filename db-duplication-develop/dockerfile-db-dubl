@@ -1,0 +1,18 @@
+FROM python:3.12-slim
+LABEL author="null_name"
+RUN useradd --uid 1000 -U -ms /bin/bash wall
+COPY ./src/app/ /home/wall/DB_duplication/
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install --no-install-recommends -y postgresql-client-17=17.6-0+deb13u1 \
+        libpq-dev=17.6-0+deb13u1 \
+        python3-dev=3.13.5-1 \
+        build-essential=12.12 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip3 install --no-cache-dir --upgrade pip -r /home/wall/DB_duplication/requirements.txt && \
+    chown -R wall:wall /home/wall/DB_duplication
+USER wall
+WORKDIR /home/wall/DB_duplication
+EXPOSE 8001
+CMD ["python3", "main.py", "daemon off;"]
