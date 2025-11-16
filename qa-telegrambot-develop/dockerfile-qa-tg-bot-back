@@ -1,0 +1,12 @@
+FROM errornoyname/python3.13-uv:1.0
+LABEL Autor='Null_Name'
+ARG DEBIAN_FRONTEND=noninteractive
+ADD ./src/app/webinterface/backend/ /root/webinterface/
+WORKDIR /root/webinterface/
+RUN apt update && apt install -y software-properties-common sshpass rsync # && add-apt-repository ppa:deadsnakes/ppa
+#RUN apt install -y python3.12 python3.12-dev python3.12-venv && python3.12 -m ensurepip --upgrade && python3.12 -m pip install --upgrade pip && python3.12 -m pip install -r requirements.txt
+RUN apt install -y poppler-utils libpoppler-dev
+EXPOSE 8000
+RUN ["/root/.local/bin/uv", "sync"]
+CMD ["/root/.local/bin/uv", "run", "main.py"]
+

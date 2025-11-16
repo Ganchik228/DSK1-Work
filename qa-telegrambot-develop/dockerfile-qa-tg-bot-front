@@ -1,0 +1,8 @@
+FROM node:22
+LABEL Autor='Null_Name'
+ADD ./src/app/webinterface/frontend/ /root/webinterface/
+WORKDIR /root/webinterface/src
+RUN apt update
+RUN cd /root/webinterface/ && npm install 
+EXPOSE 5173
+CMD ["npm", "run", "dev"]
