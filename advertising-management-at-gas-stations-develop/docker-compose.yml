@@ -1,0 +1,45 @@
+networks:
+  ad-net: ~
+  
+services:
+  # postgres:
+  #   image: postgres
+  #   container_name: postgres-ad
+  #   ports:
+  #     - '5432:5432'
+  #   networks:
+  #     - ad-net
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: ad_db
+  #   volumes:
+  #     - "/tmp/advertising_management/src/postgresql/:/docker-entrypoint-initdb.d"
+  #   restart: unless-stopped
+
+  advertising_management_back:
+    build:
+      context: .
+      dockerfile: dockerfile_back
+    container_name: "ad_management_back"
+    volumes:
+      - storage-volume:/root/advertising_management/uploads
+    ports:
+      - '8000:8000'
+    networks:
+      - ad-net
+    restart: unless-stopped
+
+  advertising_management_front:
+    build:
+      context: .
+      dockerfile: dockerfile_front
+    container_name: "ad_management_front"
+    ports:
+      - '5173:5173'
+    networks:
+      - ad-net
+    restart: unless-stopped
+
+volumes:
+  storage-volume:

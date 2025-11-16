@@ -1,0 +1,7 @@
+FROM errornoyname/python3.13-uv:1.0
+LABEL Autor="Null_Name"
+COPY ./src/app/tgbot/ /root/TelegramBot/
+WORKDIR /root/TelegramBot
+RUN ["/root/.local/bin/uv", "sync"]
+CMD ["/root/.local/bin/uv", "run", "main.py"]
+

@@ -1,0 +1,21 @@
+services:
+  fb-telegram-bot:
+    build:
+      context: .
+      dockerfile: dockerfile-fb-tg-bot
+    container_name: "fb-telegram-bot"
+    image: "fb-telegram-bot:latest"
+    networks:
+      - feedback-tg-bot
+    restart: unless-stopped
+
+  fb-tg-bot-interface-back:
+    build:
+      context: .
+      dockerfile: dockerfile-fb-tg-bot-back
+    container_name: "fb-tg-bot-interface-back"
+    image: "fb-tg-bot-interface-back:latest"
+    networks:
+      - feedback-tg-bot
+      - nginx-net
+    restart: unless-stopped

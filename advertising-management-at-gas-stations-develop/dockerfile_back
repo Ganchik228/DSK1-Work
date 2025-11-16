@@ -1,0 +1,10 @@
+FROM ubuntu:22.04
+LABEL Autor='Null_Name'
+ENV DEBIAN_FRONTEND=noninteractive
+ADD ./src/app/backend/ /root/advertising_management/
+WORKDIR /root/advertising_management/
+RUN apt update && apt install -y software-properties-common sshpass rsync && add-apt-repository ppa:deadsnakes/ppa
+RUN apt install -y python3.12 python3.12-dev python3.12-venv && python3.12 -m ensurepip --upgrade && python3.12 -m pip install --upgrade pip && python3.12 -m pip install -r requirements.txt
+RUN apt install -y handbrake-cli
+EXPOSE 8000
+CMD ["python3.12", "main.py", "daemon off;"]
