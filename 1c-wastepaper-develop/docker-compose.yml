@@ -1,0 +1,10 @@
+services:
+  1c-wastepaper:
+    build:
+      context: .
+      dockerfile: dockerfile-1c-wastepaper
+    container_name: "1c-wastepaper"
+    image: "1c-wastepaper:latest"
+    ports:
+      - '25565:25565'
+    restart: unless-stopped
